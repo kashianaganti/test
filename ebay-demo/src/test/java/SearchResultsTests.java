@@ -1,3 +1,4 @@
+import constants.SortOptions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -38,6 +39,7 @@ public class SearchResultsTests {
         HomePage homePage = new HomePage(driver);
         SearchResults results = homePage.searchForProducts(keyword);
         Assert.assertEquals(itemsLimit <= results.getResultCount(),true,"Can not return "+itemsLimit+" items, Actual returned items are "+results.getResultCount());
+        results.sort(SortOptions.LOW_PRICE_FIRST);
         List<Item> items = results.getResultItems(itemsLimit);
         System.out.println(items);
         System.out.println("items count "+items.size());

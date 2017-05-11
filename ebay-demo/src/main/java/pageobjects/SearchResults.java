@@ -27,8 +27,15 @@ public class SearchResults extends BasePage {
     @FindBy(css = ".rcnt")
     WebElement resultCount;
 
+    @FindBy(css = "#DashSortByContainer .sel a")
+    WebElement sortButton;
+
+    @FindBy(id = "SortMenu")
+    WebElement sortMenu;
+
     public static final String ITEM_TITLE = ".lvtitle a";
     public static final String ITEM_PRICE = ".lvprice span";
+    public static final String  SORT_BY_LOWEST = "Price + Shipping: lowest first";
 
 
     public List<Item> getResultItems(int limit){
@@ -90,6 +97,30 @@ public class SearchResults extends BasePage {
         }
         return price;
 
+    }
+
+    /**
+     * Mouse hover sort drop down, click on sort option from the menu that appears
+     * @param option - sort option to select
+     */
+    public void sort(String option){
+        sortButton.click();
+        getSortOptionElementOnSortMenu(option).click();
+    }
+
+    /**
+     * Iterate over sort options and return the matching option
+     * @param option
+     * @return
+     */
+    private WebElement getSortOptionElementOnSortMenu(String option){
+        List<WebElement> items = sortMenu.findElements(By.tagName("a"));
+        for(WebElement item: items){
+            if (item.getText().equals(option)){
+                return item;
+            }
+        }
+        return null;
     }
 
 
